@@ -1,24 +1,42 @@
 <html lang="en">
   <head>
-    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"
-          rel="stylesheet">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/styles.css') }}">
+    <script class="jsbin" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
   </head>
   <body>
-    <div class="container">
-      <div class="header">
-        <h3 class="text-muted">Virtual Tryon Demo</h3>
-      </div>
-      <hr/>
-      <div>
-      
+    <script>
+      function readURL(input, idToUse) {
+        console.log("Got this with idToUse as "+ idToUse)
+        console.log(this)
+        if (input.files && input.files[0]) {
+          var reader = new FileReader();
+
+          reader.onload = function (e) {
+            $("body").find("#" + idToUse).attr('src', e.target.result).width(150).height(200);
+          };
+
+          reader.readAsDataURL(input.files[0]);
+        }
+      }
+    </script>
+    <div class="file-upload"> 
       <form action="upload" method="post" enctype="multipart/form-data">
-        <h4 class="text-muted">Target Person Image</h4>
-        <input type="file" name="personImage" ><br />
-        <h4 class="text-muted">Cloth Image</h4>
-        <input type="file" name="clothImage"><br /><br />
-        <input type="submit" value="generateTryonImage">
+        <div class="image-upload-wrap">
+          <input class="file-upload-input" type='file' name="personImage" onchange="readURL(this, 'person');" accept="image/*" />
+          <div class="drag-text">
+            <h3>Drag and drop person image</h3>
+            <img id="person" src="#" alt="Target Person" />
+          </div>
+        </div>
+        <div class="image-upload-wrap">
+          <input class="file-upload-input" type='file' name="clothImage" onchange="readURL(this, 'cloth');" accept="image/*" />
+          <div class="drag-text">
+            <h3>Drag and drop cloth image</h3>
+            <img id="cloth" src="#" alt="Target Clothing" />
+          </div>
+        </div>
+        <input class="file-upload-btn" type="submit" value="Generate"></button>
       </form>
-      </div>
     </div>
   </body>
 </html>
